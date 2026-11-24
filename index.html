@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Pacci Planejados | Móveis planejados feitos peça por peça</title>
+  <meta name="description" content="Pacci Planejados: móveis planejados com corte em fábrica, MDF 100% e as melhores ferragens do mercado. Cozinhas, homes, quartos, banheiros, comerciais e studios em São Paulo." />
+  <meta name="theme-color" content="#0b1424" />
+  <meta property="og:title" content="Pacci Planejados" />
+  <meta property="og:description" content="Projetos exclusivos que transformam ambientes em experiências únicas." />
+  <meta property="og:image" content="/obras/cozinhas-p09-03-1600.webp" />
+  <link rel="icon" type="image/png" href="/marca/monograma.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <!-- Loader: uma linha de corte atravessa a tela e abre a chapa -->
+  <div id="loader" aria-hidden="true">
+    <div class="ld-metade ld-cima"></div>
+    <div class="ld-metade ld-baixo"></div>
+    <div class="ld-linha"><span class="ld-faisca"></span></div>
+    <div class="ld-info">
+      <img src="/marca/monograma.png" alt="" class="ld-logo" />
+      <span class="ld-cota mono"><span id="ld-num">0</span> mm</span>
+    </div>
+  </div>
+
+  <!-- Cursor de precisão (desktop) -->
+  <div id="mira" aria-hidden="true">
+    <span class="mira-h"></span><span class="mira-v"></span>
+    <span class="mira-coord mono"></span>
+  </div>
+
+  <header class="topo">
+    <a href="#inicio" class="topo-marca" aria-label="Pacci Planejados, início">
+      <img src="/marca/monograma.png" alt="" width="28" height="27" />
+      <span>Pacci<em>Planejados</em></span>
+    </a>
+    <nav class="topo-nav" aria-label="Seções">
+      <a href="#acabamentos">Acabamentos</a>
+      <a href="#ambientes">Ambientes</a>
+      <a href="#obras">Obras</a>
+      <a href="#vidracaria">Vidraçaria</a>
+    </nav>
+    <a class="topo-cta js-whats" href="#" target="_blank" rel="noopener">Orçamento</a>
+  </header>
+
+  <!-- Cena 3D fixa (hero + acabamentos) -->
+  <canvas id="cena" aria-hidden="true"></canvas>
+  <div id="cena-fallback" aria-hidden="true"></div>
+
+  <main>
+    <!-- 1. OFICINA: chapa, corte, encaixe -->
+    <section id="inicio" class="oficina">
+      <div class="oficina-fixo">
+        <div class="batida batida-1">
+          <p class="eyebrow mono">Pacci Planejados · móveis sob medida</p>
+          <h1 class="titulo-hero">
+            <span class="linha"><span>Feito peça</span></span>
+            <span class="linha"><span>por peça.</span></span>
+          </h1>
+          <p class="hero-sub">Cada móvel nasce como chapa, é cortado em fábrica com precisão de máquina e só então encontra o seu lugar.</p>
+          <div class="rolar mono"><span class="rolar-trilho"><span></span></span>role para montar</div>
+        </div>
+
+        <div class="batida batida-2">
+          <span class="batida-num mono">01</span>
+          <h2>Corte em fábrica.</h2>
+          <p>Maquinário de alta precisão. Medida exata, sem improviso na obra.</p>
+        </div>
+
+        <div class="batida batida-3">
+          <span class="batida-num mono">02</span>
+          <h2>Encaixe perfeito.</h2>
+          <p>Peças padronizadas que se encontram no milímetro. Menos margem de erro, mais durabilidade.</p>
+        </div>
+
+        <div class="batida batida-4">
+          <span class="batida-num mono">03</span>
+          <h2>Luz acesa.<br />Projeto entregue.</h2>
+          <p>Do primeiro contato à instalação, com comunicação transparente em cada etapa.</p>
+        </div>
+
+        <div class="cotas mono" aria-hidden="true">
+          <span class="cota-l">L <b id="cota-l">0</b></span>
+          <span class="cota-a">A <b id="cota-a">0</b></span>
+          <span class="cota-p">P <b id="cota-p">0</b></span>
+          <span class="cota-fase" id="cota-fase">chapa</span>
+        </div>
+        <div class="progresso-oficina" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <!-- 2. ACABAMENTOS: o mesmo móvel em cinco seleções -->
+    <section id="acabamentos" class="acabamentos">
+      <div class="acab-texto">
+        <p class="eyebrow mono">Seleções de acabamento</p>
+        <h2 class="titulo-sec">Escolha a pele<br />do seu móvel.</h2>
+        <p class="acab-desc">Trabalhamos com uma ampla variedade de padrões de MDF. Toque numa seleção e veja o móvel inteiro mudar, peça por peça.</p>
+
+        <div class="amostras" role="radiogroup" aria-label="Seleções de acabamento"></div>
+
+        <div class="acab-ficha">
+          <span class="mono acab-ficha-rot">seleção ativa</span>
+          <strong id="acab-nome">Freijó</strong>
+          <span id="acab-uso" class="acab-uso">aplicada em cozinhas</span>
+        </div>
+
+        <div class="acab-fotos" id="acab-fotos"></div>
+      </div>
+    </section>
+
+    <!-- 3. FERRAGEM: puxe e solte -->
+    <section id="ferragem" class="ferragem">
+      <div class="ferr-grid">
+        <div class="ferr-texto">
+          <p class="eyebrow mono">Melhores ferragens do mercado</p>
+          <h2 class="titulo-sec">Puxe.<br />Solte.<br /><em>Sinta.</em></h2>
+          <p>Amortecedores, corrediças telescópicas e dobradiças com fechamento suave. A diferença de uma boa ferragem se sente no fim do movimento, quando a gaveta desacelera sozinha.</p>
+          <ul class="ferr-marcas mono">
+            <li>Blum</li><li>Häfele</li><li>Hettich</li><li>FGVTN</li>
+          </ul>
+        </div>
+        <div class="ferr-palco">
+          <canvas id="ferr-canvas" aria-label="Gaveta 3D: arraste para abrir e solte para ver o fechamento suave"></canvas>
+          <div class="ferr-dica mono"><span class="ferr-seta"></span>arraste a gaveta</div>
+          <div class="ferr-grafico" aria-hidden="true">
+            <div class="ferr-graf-topo mono"><span>velocidade de fechamento</span><span id="ferr-vel">0,00 m/s</span></div>
+            <svg viewBox="0 0 300 70" preserveAspectRatio="none"><polyline id="ferr-linha" points="" /></svg>
+            <div class="ferr-graf-rodape mono"><span>abertura</span><span class="ferr-zona">zona de amortecimento</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PILARES -->
+    <section id="pilares" class="pilares">
+      <div class="pilares-trilho">
+        <div class="pilar pilar-intro">
+          <p class="eyebrow mono">Qualidade e identidade</p>
+          <h2 class="titulo-sec">Oito anos<br />fazendo do<br />jeito certo.</h2>
+          <p>Uma empresa moderna, atualizada com as tendências do mercado, com móveis direto da fábrica: qualidade excepcional com preço acessível.</p>
+        </div>
+        <article class="pilar">
+          <span class="pilar-num mono">01</span>
+          <div class="pilar-ico" data-ico="projeto"></div>
+          <h3>Projetos personalizados</h3>
+          <p>Produção em fábrica, precisão e acabamento superior. Cada projeto une estética, funcionalidade e identidade.</p>
+        </article>
+        <article class="pilar">
+          <span class="pilar-num mono">02</span>
+          <div class="pilar-ico" data-ico="corte"></div>
+          <h3>Corte em fábrica</h3>
+          <p>Diferente da marcenaria convencional, o processo industrial reduz a margem de erro e garante encaixes perfeitos.</p>
+        </article>
+        <article class="pilar">
+          <span class="pilar-num mono">03</span>
+          <div class="pilar-ico" data-ico="ferragem"></div>
+          <h3>Ferragens de primeira</h3>
+          <p>Abertura suave, resistência ao uso diário e longa vida útil. Cada detalhe pensado para desempenho e sofisticação.</p>
+        </article>
+        <article class="pilar">
+          <span class="pilar-num mono">04</span>
+          <div class="pilar-ico" data-ico="mdf"></div>
+          <h3>100% MDF</h3>
+          <p>Mais resistência, estabilidade e bordas refinadas. Ideal para quem busca durabilidade e alto padrão nos detalhes.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5. AMBIENTES como gavetas -->
+    <section id="ambientes" class="ambientes">
+      <div class="amb-cabeca">
+        <p class="eyebrow mono">Ambientes</p>
+        <h2 class="titulo-sec">Abra uma gaveta.<br />Tem obra entregue dentro.</h2>
+      </div>
+      <div class="gaveteiro" id="gaveteiro"></div>
+    </section>
+
+    <!-- 6. MAPA DE OBRAS -->
+    <section id="obras" class="obras">
+      <div class="obras-grid">
+        <div class="obras-texto">
+          <p class="eyebrow mono">Onde já estamos</p>
+          <h2 class="titulo-sec">De Alphaville<br />a Arujá.</h2>
+          <p>Cada ponto é um bairro onde existe um móvel Pacci instalado. Passe o mouse ou toque para ver a obra.</p>
+          <div class="obras-cont mono"><b id="obras-n">0</b> bairros nesta seleção de projetos</div>
+        </div>
+        <div class="mapa" id="mapa">
+          <svg id="mapa-svg" viewBox="0 0 1000 520" aria-label="Mapa de bairros com obras da Pacci"></svg>
+          <figure class="mapa-card" id="mapa-card" aria-hidden="true">
+            <img alt="" />
+            <figcaption><span class="mono"></span><strong></strong></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. MATERIAIS -->
+    <section id="materiais" class="materiais" aria-label="Marcas parceiras">
+      <div class="faixa">
+        <p class="faixa-rot mono">MDF</p>
+        <div class="faixa-trilho"><div class="faixa-itens">Arauco<i></i>Berneck<i></i>Guararapes<i></i>Duratex<i></i>Sudati<i></i>Eucatex<i></i></div></div>
+      </div>
+      <div class="faixa faixa-inv">
+        <p class="faixa-rot mono">Puxadores e ferragens</p>
+        <div class="faixa-trilho"><div class="faixa-itens">Zen<i></i>Torralba<i></i>Alumbra<i></i>Häfele<i></i>Italyline<i></i>Blum<i></i>Maxave<i></i>Hard<i></i></div></div>
+      </div>
+    </section>
+
+    <!-- 8. VIDRAÇARIA -->
+    <section id="vidracaria" class="vidracaria">
+      <div class="vidro-palco" id="vidro-palco">
+        <div class="vidro-espelho">
+          <img src="/obras/vidracaria-p45-02-1600.webp" alt="Closet com espelho orgânico e portas de vidro reflecta" loading="lazy" />
+          <span class="vidro-brilho"></span>
+        </div>
+      </div>
+      <div class="vidro-texto">
+        <p class="eyebrow mono">Vidraçaria</p>
+        <h2 class="titulo-sec">Mais do que vidro.<br /><em>Reflexo.</em></h2>
+        <p>Portas reflecta que trazem sofisticação e privacidade, espelhos orgânicos que valorizam o ambiente com leveza. Uma ampla variedade de vidros para unir estética e funcionalidade.</p>
+      </div>
+    </section>
+
+    <!-- 9. CONTATO -->
+    <section id="contato" class="contato">
+      <div class="gravacao">
+        <canvas id="gravacao-canvas" width="640" height="666" aria-hidden="true"></canvas>
+      </div>
+      <p class="eyebrow mono">Seu projeto em perfeitas mãos</p>
+      <h2 class="titulo-contato">Vamos desenhar<br />o seu ambiente?</h2>
+      <a class="btn-whats js-whats" href="#" target="_blank" rel="noopener">
+        <span>Chamar no WhatsApp</span>
+        <b class="mono">(11) 99755-0461</b>
+      </a>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <span>Pacci Planejados e Decoração</span>
+    <a href="https://www.pacciplanejados.com.br" class="mono">pacciplanejados.com.br</a>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Foto ampliada">
+    <button class="lb-fechar" aria-label="Fechar">Fechar</button>
+    <button class="lb-nav lb-ant" aria-label="Foto anterior"></button>
+    <img alt="" />
+    <button class="lb-nav lb-prox" aria-label="Próxima foto"></button>
+    <p class="lb-leg mono"></p>
+  </div>
+
+  <a class="whats-flutuante js-whats" href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7a.6.6 0 0 0 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.4 6.4 0 0 0 1.4 3.4 14.6 14.6 0 0 0 5.6 4.9c2 .9 2.9.9 3.9.8a3.3 3.3 0 0 0 2.2-1.5 2.7 2.7 0 0 0 .2-1.5c-.1-.2-.3-.3-.7-.5Z"/></svg>
+  </a>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

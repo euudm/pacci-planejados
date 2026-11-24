@@ -1,0 +1,856 @@
+[
+ {
+  "id": "cozinhas-p05-02",
+  "cat": "cozinhas",
+  "bairro": null,
+  "selecao": "Freijó",
+  "r": 0.803
+ },
+ {
+  "id": "cozinhas-p05-03",
+  "cat": "cozinhas",
+  "bairro": null,
+  "selecao": "Freijó",
+  "r": 0.803
+ },
+ {
+  "id": "cozinhas-p05-04",
+  "cat": "cozinhas",
+  "bairro": null,
+  "selecao": "Freijó",
+  "r": 0.803
+ },
+ {
+  "id": "cozinhas-p05-05",
+  "cat": "cozinhas",
+  "bairro": null,
+  "selecao": "Freijó",
+  "r": 0.803
+ },
+ {
+  "id": "cozinhas-p05-06",
+  "cat": "cozinhas",
+  "bairro": null,
+  "selecao": "Freijó",
+  "r": 0.802
+ },
+ {
+  "id": "cozinhas-p05-07",
+  "cat": "cozinhas",
+  "bairro": null,
+  "selecao": "Freijó",
+  "r": 0.803
+ },
+ {
+  "id": "cozinhas-p05-08",
+  "cat": "cozinhas",
+  "bairro": null,
+  "selecao": "Freijó",
+  "r": 0.803
+ },
+ {
+  "id": "cozinhas-p06-02",
+  "cat": "cozinhas",
+  "bairro": "Aldeia da Serra",
+  "selecao": null,
+  "r": 0.562
+ },
+ {
+  "id": "cozinhas-p06-03",
+  "cat": "cozinhas",
+  "bairro": "Aldeia da Serra",
+  "selecao": null,
+  "r": 0.563
+ },
+ {
+  "id": "cozinhas-p06-04",
+  "cat": "cozinhas",
+  "bairro": "Aldeia da Serra",
+  "selecao": null,
+  "r": 0.563
+ },
+ {
+  "id": "cozinhas-p06-06",
+  "cat": "cozinhas",
+  "bairro": "Aldeia da Serra",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "cozinhas-p07-01",
+  "cat": "cozinhas",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "cozinhas-p07-02",
+  "cat": "cozinhas",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "cozinhas-p07-03",
+  "cat": "cozinhas",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "cozinhas-p07-05",
+  "cat": "cozinhas",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "cozinhas-p08-02",
+  "cat": "cozinhas",
+  "bairro": "Liberdade",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "cozinhas-p08-03",
+  "cat": "cozinhas",
+  "bairro": "Liberdade",
+  "selecao": null,
+  "r": 0.749
+ },
+ {
+  "id": "cozinhas-p09-02",
+  "cat": "cozinhas",
+  "bairro": "Morumbi",
+  "selecao": null,
+  "r": 0.749
+ },
+ {
+  "id": "cozinhas-p09-03",
+  "cat": "cozinhas",
+  "bairro": "Morumbi",
+  "selecao": null,
+  "r": 0.792
+ },
+ {
+  "id": "cozinhas-p10-02",
+  "cat": "cozinhas",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "cozinhas-p10-03",
+  "cat": "cozinhas",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "cozinhas-p11-02",
+  "cat": "cozinhas",
+  "bairro": null,
+  "selecao": null,
+  "r": 0.749
+ },
+ {
+  "id": "cozinhas-p11-03",
+  "cat": "cozinhas",
+  "bairro": null,
+  "selecao": null,
+  "r": 0.563
+ },
+ {
+  "id": "homes-p13-01",
+  "cat": "homes",
+  "bairro": null,
+  "selecao": "Beige Matt",
+  "r": 0.802
+ },
+ {
+  "id": "homes-p13-02",
+  "cat": "homes",
+  "bairro": null,
+  "selecao": "Beige Matt",
+  "r": 1.0
+ },
+ {
+  "id": "homes-p13-03",
+  "cat": "homes",
+  "bairro": null,
+  "selecao": "Beige Matt",
+  "r": 1.0
+ },
+ {
+  "id": "homes-p13-04",
+  "cat": "homes",
+  "bairro": null,
+  "selecao": "Beige Matt",
+  "r": 0.803
+ },
+ {
+  "id": "homes-p13-05",
+  "cat": "homes",
+  "bairro": null,
+  "selecao": "Beige Matt",
+  "r": 0.803
+ },
+ {
+  "id": "homes-p14-01",
+  "cat": "homes",
+  "bairro": "Pinheiros",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "homes-p14-02",
+  "cat": "homes",
+  "bairro": "Pinheiros",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "homes-p14-03",
+  "cat": "homes",
+  "bairro": "Pinheiros",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "homes-p14-04",
+  "cat": "homes",
+  "bairro": "Pinheiros",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "homes-p15-01",
+  "cat": "homes",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "homes-p15-02",
+  "cat": "homes",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "homes-p15-04",
+  "cat": "homes",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "homes-p16-02",
+  "cat": "homes",
+  "bairro": "Santo Amaro",
+  "selecao": null,
+  "r": 0.749
+ },
+ {
+  "id": "homes-p17-02",
+  "cat": "homes",
+  "bairro": "Augusta",
+  "selecao": null,
+  "r": 0.749
+ },
+ {
+  "id": "homes-p17-03",
+  "cat": "homes",
+  "bairro": "Augusta",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "homes-p18-02",
+  "cat": "homes",
+  "bairro": "Campo Belo",
+  "selecao": null,
+  "r": 1.5
+ },
+ {
+  "id": "homes-p18-03",
+  "cat": "homes",
+  "bairro": "Campo Belo",
+  "selecao": null,
+  "r": 0.667
+ },
+ {
+  "id": "quartos-p20-02",
+  "cat": "quartos",
+  "bairro": null,
+  "selecao": "Moss Essencial",
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p20-03",
+  "cat": "quartos",
+  "bairro": null,
+  "selecao": "Moss Essencial",
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p20-04",
+  "cat": "quartos",
+  "bairro": null,
+  "selecao": "Moss Essencial",
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p20-05",
+  "cat": "quartos",
+  "bairro": null,
+  "selecao": "Moss Essencial",
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p20-06",
+  "cat": "quartos",
+  "bairro": null,
+  "selecao": "Moss Essencial",
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p20-07",
+  "cat": "quartos",
+  "bairro": null,
+  "selecao": "Moss Essencial",
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p20-08",
+  "cat": "quartos",
+  "bairro": null,
+  "selecao": "Moss Essencial",
+  "r": 1.0
+ },
+ {
+  "id": "quartos-p20-10",
+  "cat": "quartos",
+  "bairro": null,
+  "selecao": "Moss Essencial",
+  "r": 1.0
+ },
+ {
+  "id": "quartos-p20-11",
+  "cat": "quartos",
+  "bairro": null,
+  "selecao": "Moss Essencial",
+  "r": 0.8
+ },
+ {
+  "id": "quartos-p21-03",
+  "cat": "quartos",
+  "bairro": "Arujá",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p21-04",
+  "cat": "quartos",
+  "bairro": "Arujá",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p21-05",
+  "cat": "quartos",
+  "bairro": "Arujá",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p21-06",
+  "cat": "quartos",
+  "bairro": "Arujá",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p22-02",
+  "cat": "quartos",
+  "bairro": "Pinheiros",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p22-03",
+  "cat": "quartos",
+  "bairro": "Pinheiros",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p22-04",
+  "cat": "quartos",
+  "bairro": "Pinheiros",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p22-05",
+  "cat": "quartos",
+  "bairro": "Pinheiros",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p23-02",
+  "cat": "quartos",
+  "bairro": "Campo Belo",
+  "selecao": null,
+  "r": 0.738
+ },
+ {
+  "id": "quartos-p23-03",
+  "cat": "quartos",
+  "bairro": "Campo Belo",
+  "selecao": null,
+  "r": 0.755
+ },
+ {
+  "id": "quartos-p24-02",
+  "cat": "quartos",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "quartos-p24-03",
+  "cat": "quartos",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p26-01",
+  "cat": "banheiros",
+  "bairro": null,
+  "selecao": "Branco Cristallo",
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p26-02",
+  "cat": "banheiros",
+  "bairro": null,
+  "selecao": "Branco Cristallo",
+  "r": 0.885
+ },
+ {
+  "id": "banheiros-p26-04",
+  "cat": "banheiros",
+  "bairro": null,
+  "selecao": "Branco Cristallo",
+  "r": 0.808
+ },
+ {
+  "id": "banheiros-p27-02",
+  "cat": "banheiros",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p27-04",
+  "cat": "banheiros",
+  "bairro": "Alphaville",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p28-02",
+  "cat": "banheiros",
+  "bairro": "Tatuapé",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p28-03",
+  "cat": "banheiros",
+  "bairro": "Tatuapé",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p28-04",
+  "cat": "banheiros",
+  "bairro": "Tatuapé",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p29-01",
+  "cat": "banheiros",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 1.333
+ },
+ {
+  "id": "banheiros-p29-02",
+  "cat": "banheiros",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p29-03",
+  "cat": "banheiros",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p29-04",
+  "cat": "banheiros",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p30-01",
+  "cat": "banheiros",
+  "bairro": "Campo Belo",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "banheiros-p30-02",
+  "cat": "banheiros",
+  "bairro": "Campo Belo",
+  "selecao": null,
+  "r": 1.333
+ },
+ {
+  "id": "comerciais-p32-02",
+  "cat": "comerciais",
+  "bairro": null,
+  "selecao": "Carvalho Malva",
+  "r": 1.0
+ },
+ {
+  "id": "comerciais-p32-03",
+  "cat": "comerciais",
+  "bairro": null,
+  "selecao": "Carvalho Malva",
+  "r": 0.563
+ },
+ {
+  "id": "comerciais-p32-05",
+  "cat": "comerciais",
+  "bairro": null,
+  "selecao": "Carvalho Malva",
+  "r": 0.563
+ },
+ {
+  "id": "comerciais-p32-06",
+  "cat": "comerciais",
+  "bairro": null,
+  "selecao": "Carvalho Malva",
+  "r": 0.906
+ },
+ {
+  "id": "comerciais-p32-07",
+  "cat": "comerciais",
+  "bairro": null,
+  "selecao": "Carvalho Malva",
+  "r": 1.0
+ },
+ {
+  "id": "comerciais-p32-08",
+  "cat": "comerciais",
+  "bairro": null,
+  "selecao": "Carvalho Malva",
+  "r": 1.0
+ },
+ {
+  "id": "comerciais-p33-03",
+  "cat": "comerciais",
+  "bairro": "Barueri",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "comerciais-p33-04",
+  "cat": "comerciais",
+  "bairro": "Barueri",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "comerciais-p33-05",
+  "cat": "comerciais",
+  "bairro": "Barueri",
+  "selecao": null,
+  "r": 0.461
+ },
+ {
+  "id": "comerciais-p34-02",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "comerciais-p34-03",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "comerciais-p34-04",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "comerciais-p34-05",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.563
+ },
+ {
+  "id": "comerciais-p34-08",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "comerciais-p34-09",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "comerciais-p34-10",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "comerciais-p35-02",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.563
+ },
+ {
+  "id": "comerciais-p35-03",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "comerciais-p35-04",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.563
+ },
+ {
+  "id": "comerciais-p35-05",
+  "cat": "comerciais",
+  "bairro": "Itaim Bibi",
+  "selecao": null,
+  "r": 0.563
+ },
+ {
+  "id": "studios-p37-01",
+  "cat": "studios",
+  "bairro": "Brooklin",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p37-02",
+  "cat": "studios",
+  "bairro": "Brooklin",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p37-03",
+  "cat": "studios",
+  "bairro": "Brooklin",
+  "selecao": null,
+  "r": 0.749
+ },
+ {
+  "id": "studios-p37-04",
+  "cat": "studios",
+  "bairro": "Brooklin",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p38-02",
+  "cat": "studios",
+  "bairro": "Brooklin",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p38-03",
+  "cat": "studios",
+  "bairro": "Brooklin",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p38-04",
+  "cat": "studios",
+  "bairro": "Brooklin",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p38-05",
+  "cat": "studios",
+  "bairro": "Brooklin",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p39-02",
+  "cat": "studios",
+  "bairro": "Vila Mariana",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p39-03",
+  "cat": "studios",
+  "bairro": "Vila Mariana",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p39-04",
+  "cat": "studios",
+  "bairro": "Vila Mariana",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p39-05",
+  "cat": "studios",
+  "bairro": "Vila Mariana",
+  "selecao": null,
+  "r": 1.334
+ },
+ {
+  "id": "studios-p40-02",
+  "cat": "studios",
+  "bairro": "Vila Mariana",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p40-03",
+  "cat": "studios",
+  "bairro": "Vila Mariana",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p40-04",
+  "cat": "studios",
+  "bairro": "Vila Mariana",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p40-05",
+  "cat": "studios",
+  "bairro": "Vila Mariana",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p40-06",
+  "cat": "studios",
+  "bairro": "Vila Mariana",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p41-02",
+  "cat": "studios",
+  "bairro": "Bela Vista",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p41-03",
+  "cat": "studios",
+  "bairro": "Bela Vista",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p41-04",
+  "cat": "studios",
+  "bairro": "Bela Vista",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p41-05",
+  "cat": "studios",
+  "bairro": "Bela Vista",
+  "selecao": null,
+  "r": 2.403
+ },
+ {
+  "id": "studios-p41-06",
+  "cat": "studios",
+  "bairro": "Bela Vista",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p41-07",
+  "cat": "studios",
+  "bairro": "Bela Vista",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p42-02",
+  "cat": "studios",
+  "bairro": "Consolação",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p42-03",
+  "cat": "studios",
+  "bairro": "Consolação",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "studios-p42-04",
+  "cat": "studios",
+  "bairro": "Consolação",
+  "selecao": null,
+  "r": 0.75
+ },
+ {
+  "id": "vidracaria-p45-02",
+  "cat": "vidracaria",
+  "bairro": null,
+  "selecao": null,
+  "r": 1.0
+ }
+]
