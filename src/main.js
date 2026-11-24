@@ -271,36 +271,60 @@ mm.add('(max-width: 900px)', () => {
   voo.atualizar(0);
 });
 
-// ---------- vidraçaria ----------
+// ---------- vidraçaria: portas reflecta abrem e o closet vira a peça de vidro ----------
 const palco = $('#vidro-palco');
-const espelho = $('.vidro-espelho');
-if (!toque) {
+const vcena = $('#vidro-cena');
+const alvo = $('.vidro-alvo');
+const vtexto = $('.vidro-texto');
+// no celular a peça ocupa todo o espaço livre acima do texto
+const altAlvo = () => (window.innerWidth <= 900 ? Math.max(200, vtexto.offsetTop - alvo.offsetTop - 28) : alvo.offsetHeight);
+const LEGENDAS = { reflecta: 'Sofisticação e privacidade', incolor: 'Transparência e leveza', espelho: 'Valoriza o ambiente com leveza' };
+const botoesVidro = $$('.vidro-tipos button');
+botoesVidro.forEach((b) => b.addEventListener('click', () => {
+  botoesVidro.forEach((o) => o.setAttribute('aria-checked', String(o === b)));
+  palco.classList.remove('modo-reflecta', 'modo-incolor', 'modo-espelho');
+  palco.classList.add(`modo-${b.dataset.modo}`);
+  $('.vidro-legenda').textContent = LEGENDAS[b.dataset.modo];
+}));
+
+const vtl = gsap.timeline({ defaults: { ease: 'none' } });
+vtl
+  // 1. as duas portas de correr abrem, o reflexo corre pelo vidro
+  .to('.porta-esq', { xPercent: -101, duration: 4, ease: 'power2.inOut' }, 0)
+  .to('.porta-dir', { xPercent: 101, duration: 4, ease: 'power2.inOut' }, 0)
+  .fromTo('.porta', { '--brilho': '-30%' }, { '--brilho': '45%', duration: 4 }, 0)
+  .to('.vidro-abertura', { opacity: 0, y: -24, duration: 1.2 }, 0)
+  .fromTo(vcena, { '--zoom': 1.16 }, { '--zoom': 1.03, duration: 8 }, 0)
+  // 2. o closet encolhe até virar a peça de vidro
+  .fromTo(vcena,
+    { left: 0, top: 0, width: () => palco.offsetWidth, height: () => palco.offsetHeight },
+    { left: () => alvo.offsetLeft, top: () => alvo.offsetTop, width: () => alvo.offsetWidth, height: altAlvo, duration: 3.6, ease: 'power3.inOut' }, 4.4)
+  .fromTo(palco, { '--k': 0 }, { '--k': 1, duration: 3.6, ease: 'power3.inOut' }, 4.4)
+  // 3. texto e seletor de vidro entram
+  .fromTo('.vidro-texto > *', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 2, stagger: 0.35, ease: 'power3.out' }, 6.8)
+  .to({}, { duration: 1.6 });
+if (toque) vtl.fromTo(vcena, { '--bx': '10%', '--by': '20%' }, { '--bx': '90%', '--by': '60%', duration: vtl.duration() }, 0);
+else {
   palco.addEventListener('pointermove', (e) => {
-    const r = palco.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-    espelho.style.setProperty('--ry', `${x * 14}deg`);
-    espelho.style.setProperty('--rx', `${-y * 10}deg`);
-    espelho.style.setProperty('--tx', `${-x * 4}%`);
-    espelho.style.setProperty('--ty', `${-y * 4}%`);
-    espelho.style.setProperty('--bx', `${(x + 0.5) * 100}%`);
-    espelho.style.setProperty('--by', `${(y + 0.5) * 100}%`);
+    const r = vcena.getBoundingClientRect();
+    vcena.style.setProperty('--bx', `${((e.clientX - r.left) / r.width) * 100}%`);
+    vcena.style.setProperty('--by', `${((e.clientY - r.top) / r.height) * 100}%`);
   });
-  palco.addEventListener('pointerleave', () => ['--ry', '--rx', '--tx', '--ty'].forEach((v) => espelho.style.setProperty(v, 0)));
+}
+
+if (reduzido) {
+  vtl.progress(1);
+  palco.classList.add('pronto');
+  window.addEventListener('resize', () => vtl.invalidate().progress(1));
 } else {
-  // celular: o espelho gira e o reflexo corre conforme a rolagem
   ScrollTrigger.create({
-    trigger: '#vidracaria', start: 'top bottom', end: 'bottom top',
-    onUpdate: (s) => {
-      const x = s.progress - 0.5;
-      espelho.style.setProperty('--ry', `${x * 26}deg`);
-      espelho.style.setProperty('--tx', `${-x * 6}%`);
-      espelho.style.setProperty('--bx', `${(1 - s.progress) * 100}%`);
-      espelho.style.setProperty('--by', `${20 + s.progress * 50}%`);
-    },
+    trigger: '#vidracaria', start: 'top top', end: '+=260%',
+    pin: true, scrub: toque ? true : 0.6, animation: vtl, invalidateOnRefresh: true,
+    onUpdate: (s) => palco.classList.toggle('pronto', s.progress > 0.74),
+    onToggle: (s) => $('.whats-flutuante').classList.toggle('escondido', s.isActive),
   });
 }
 if (toque && $('.ferr-dica')) $('.ferr-dica').lastChild.textContent = 'deslize a gaveta para o lado';
-gsap.fromTo(espelho, { clipPath: 'inset(50% 0 50% 0)' }, { clipPath: 'inset(0% 0 0% 0)', duration: 1.6, ease: 'expo.inOut', scrollTrigger: { trigger: '#vidracaria', start: 'top 65%' } });
 
 // ---------- contato: gravação ----------
 const grav = montarGravacao($('#gravacao-canvas'));
@@ -308,8 +332,8 @@ if (reduzido) grav.mostrarPronto();
 else ScrollTrigger.create({ trigger: '.gravacao', start: 'top 80%', once: true, onEnter: () => grav.gravar() });
 
 // ---------- revelações de texto ----------
-$$('.titulo-sec, .titulo-contato, .acab-desc, .ferr-texto p, .obras-texto p, .vidro-texto p, .pilar-intro p').forEach((el) => {
-  if (el.closest('.oficina')) return;
+$$('.titulo-sec, .titulo-contato, .acab-desc, .ferr-texto p, .obras-texto p, .pilar-intro p').forEach((el) => {
+  if (el.closest('.oficina') || el.closest('.vidracaria')) return;
   gsap.from(el, { y: 40, opacity: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
 });
 

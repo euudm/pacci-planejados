@@ -317,24 +317,86 @@ main { position: relative; z-index: 1; }
 @keyframes faixa { to { transform: translateX(-50%); } }
 
 /* ---------------- 8. VIDRAÇARIA ---------------- */
-.vidracaria { background: radial-gradient(80% 70% at 30% 40%, #1b2a44, var(--navy) 70%); padding: 16vh var(--lateral); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: 6vw; align-items: center; overflow: hidden; }
-.vidro-palco { perspective: 1200px; display: flex; justify-content: center; }
-.vidro-espelho {
-  width: min(460px, 100%); aspect-ratio: 0.72; position: relative; overflow: hidden;
-  border-radius: 46% 54% 50% 50% / 38% 40% 60% 62%;
-  animation: organico 14s ease-in-out infinite alternate;
-  box-shadow: 0 0 0 1px rgba(255, 220, 170, 0.35), 0 0 0 10px rgba(255, 255, 255, 0.03), 0 60px 100px -40px rgba(0, 0, 0, 0.9);
-  transform: rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg));
-  transition: transform 0.8s var(--ease);
+/* Seção presa: portas reflecta abrem, o closet aparece e encolhe até virar uma peça de vidro configurável. */
+.vidracaria { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: radial-gradient(80% 70% at 30% 40%, #1b2a44, var(--navy) 70%); }
+.vidro-palco { position: absolute; inset: 0; --k: 0; }
+.vidro-alvo { position: absolute; left: var(--lateral); top: 13vh; width: 46vw; height: 76vh; pointer-events: none; visibility: hidden; }
+
+.vidro-cena {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1;
+  /* --k vai de 0 (tela cheia) a 1 (peça pronta): o arredondamento cresce junto */
+  border-radius: calc(var(--k) * 3.2%) / calc(var(--k) * 2.6%);
+  box-shadow: 0 50px 90px -40px rgba(0, 0, 0, calc(var(--k) * 0.9));
+  will-change: left, top, width, height;
 }
-.vidro-espelho img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12) translate(var(--tx, 0), var(--ty, 0)); transition: transform 0.8s var(--ease); }
-.vidro-brilho { position: absolute; inset: 0; background: radial-gradient(40% 30% at var(--bx, 30%) var(--by, 20%), rgba(255, 255, 255, 0.4), transparent 70%), linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.12) 45%, transparent 55%); mix-blend-mode: soft-light; pointer-events: none; }
-@keyframes organico {
-  0% { border-radius: 46% 54% 50% 50% / 38% 40% 60% 62%; }
-  50% { border-radius: 52% 48% 44% 56% / 44% 36% 64% 56%; }
-  100% { border-radius: 44% 56% 54% 46% / 36% 46% 54% 64%; }
+.vidro-palco.pronto .vidro-cena { transition: border-radius 1s var(--ease), box-shadow 1s var(--ease); }
+.vidro-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(var(--zoom, 1.16)); transition: opacity 0.9s var(--ease); }
+.vidro-foto-inv { transform: scale(var(--zoom, 1.16)) scaleX(-1); opacity: 0; }
+.vidro-tinta, .vidro-reflexo, .vidro-prata, .vidro-brilho, .vidro-moldura { position: absolute; inset: 0; pointer-events: none; transition: opacity 0.9s var(--ease); }
+.vidro-tinta { background: linear-gradient(160deg, rgba(120, 82, 44, 0.55), rgba(38, 24, 12, 0.78)); mix-blend-mode: multiply; opacity: 0; }
+.vidro-reflexo { display: flex; align-items: center; justify-content: center; opacity: 0; mix-blend-mode: screen; }
+.vidro-reflexo b, .porta-reflexo b {
+  font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; transform: scaleX(-1) translateX(var(--rx, 0));
+  background: linear-gradient(180deg, rgba(255, 230, 196, 0.32), rgba(255, 230, 196, 0.02) 75%); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.vidro-texto p { color: #c3cad6; max-width: 440px; }
+.vidro-cena { container-type: size; }
+.vidro-reflexo b { font-size: 30cqw; }
+.vidro-prata { background: radial-gradient(70% 60% at 50% 40%, rgba(255, 255, 255, 0.16), rgba(200, 214, 230, 0.32)); mix-blend-mode: soft-light; opacity: 0; }
+.vidro-brilho { background: radial-gradient(38% 30% at var(--bx, 30%) var(--by, 25%), rgba(255, 255, 255, 0.38), transparent 70%), linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.14) 42%, transparent 52%); mix-blend-mode: soft-light; opacity: var(--k); }
+.vidro-moldura { border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255, 220, 170, 0.55), inset 0 0 0 7px rgba(201, 164, 106, 0.22); opacity: var(--k); }
+
+/* modos do vidro */
+.modo-reflecta .vidro-tinta { opacity: 1; }
+.modo-reflecta .vidro-reflexo { opacity: 0.55; }
+.modo-incolor .vidro-brilho { filter: brightness(1.25); }
+.modo-espelho .vidro-cena {
+  border-radius: calc(var(--k) * 48%) calc(var(--k) * 52%) calc(var(--k) * 46%) calc(var(--k) * 54%) / calc(var(--k) * 40%) calc(var(--k) * 38%) calc(var(--k) * 62%) calc(var(--k) * 60%);
+  box-shadow: 0 0 0 2px rgba(255, 240, 214, calc(var(--k) * 0.9)), 0 0 34px 4px rgba(255, 222, 170, calc(var(--k) * 0.5)), 0 0 120px 10px rgba(255, 200, 140, calc(var(--k) * 0.22));
+}
+.modo-espelho .vidro-foto-inv { opacity: 1; }
+.modo-espelho .vidro-prata { opacity: 1; }
+.modo-espelho .vidro-moldura { opacity: 0; }
+
+/* portas de correr reflecta */
+.vidro-portas { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.porta {
+  position: absolute; top: 0; bottom: 0; width: 50.5%; overflow: hidden;
+  background: linear-gradient(170deg, rgba(64, 44, 26, 0.93), rgba(22, 16, 12, 0.97));
+  box-shadow: inset 0 0 0 1px rgba(255, 220, 170, 0.35), inset 0 0 0 9px rgba(201, 164, 106, 0.5), inset 0 0 0 10px rgba(255, 220, 170, 0.4);
+  will-change: transform;
+}
+.porta-esq { left: 0; }
+.porta-dir { right: 0; }
+.porta-reflexo { position: absolute; top: 0; bottom: 0; width: 198%; display: flex; align-items: center; justify-content: center; }
+.porta-esq .porta-reflexo { left: 0; }
+.porta-dir .porta-reflexo { right: 0; }
+.porta-reflexo b { font-size: 21vw; }
+.porta-brilho { position: absolute; inset: -20% -60%; background: linear-gradient(105deg, transparent 40%, rgba(255, 236, 205, 0.13) 47%, rgba(255, 236, 205, 0.04) 52%, transparent 58%); transform: translateX(var(--brilho, -30%)); }
+.porta-puxador { position: absolute; top: 50%; width: 4px; height: 34vh; margin-top: -17vh; border-radius: 2px; background: linear-gradient(90deg, #8a6a3a, var(--ouro-luz), #a47c3f); box-shadow: 0 0 16px rgba(255, 207, 143, 0.25); }
+.porta-esq .porta-puxador { right: 30px; }
+.porta-dir .porta-puxador { left: 30px; }
+
+.vidro-abertura { position: absolute; z-index: 3; left: 0; right: 0; bottom: clamp(26px, 6vh, 56px); display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none; }
+.vidro-abertura .eyebrow { margin: 0; }
+.vidro-dica { margin: 0; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cinza); }
+
+.vidro-texto { position: absolute; z-index: 3; left: calc(var(--lateral) + 46vw + 6vw); right: var(--lateral); top: 50%; transform: translateY(-50%); max-width: 520px; }
+.vidro-texto .titulo-sec { margin-bottom: 22px; }
+.vidro-desc { color: #c3cad6; max-width: 440px; }
+.vidro-tipos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vidro-tipos button {
+  display: inline-flex; align-items: center; gap: 10px; padding: 11px 16px 11px 12px; border-radius: 999px; cursor: pointer;
+  font: inherit; font-size: 14px; color: var(--creme); background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: border-color 0.3s, background 0.3s;
+}
+.vidro-palco:not(.pronto) .vidro-tipos { pointer-events: none; }
+.vidro-tipos button:hover { border-color: var(--linha); }
+.vidro-tipos button[aria-checked='true'] { border-color: var(--ouro); background: rgba(201, 164, 106, 0.12); }
+.vidro-tipos i { width: 18px; height: 18px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35); }
+.vidro-tipos [data-modo='reflecta'] i { background: linear-gradient(135deg, #8a6440, #2a1c10); }
+.vidro-tipos [data-modo='incolor'] i { background: linear-gradient(135deg, rgba(230, 244, 255, 0.5), rgba(160, 190, 210, 0.15)); }
+.vidro-tipos [data-modo='espelho'] i { background: linear-gradient(135deg, #f4f6f8, #9aa6b4); border-radius: 50% 44% 52% 46% / 46% 52% 44% 54%; box-shadow: 0 0 8px rgba(255, 222, 170, 0.7); }
+.vidro-legenda { margin: 16px 0 0; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ouro); min-height: 1.4em; }
 
 /* ---------------- 9. CONTATO ---------------- */
 .contato { background: var(--navy); text-align: center; padding: 14vh var(--lateral) 16vh; display: flex; flex-direction: column; align-items: center; position: relative; }
@@ -414,6 +476,8 @@ main { position: relative; z-index: 1; }
   .amostras { gap: 10px; margin: 8px 0 26px; flex-wrap: nowrap; }
   .amostra { width: auto; flex: 1 1 0; height: clamp(54px, 9svh, 74px); }
   .amostra span { bottom: -22px; font-size: 9.5px; }
+  .amostra:first-child span { right: auto; text-align: left; }
+  .amostra:last-child span { left: auto; text-align: right; }
   .acab-ficha { padding: 10px 0 12px; margin-top: 0; border-top: 0; grid-template-columns: 1fr auto; align-items: end; }
   .acab-ficha-rot { grid-column: 1 / -1; }
   .acab-ficha strong { font-size: 24px; }
@@ -472,8 +536,19 @@ main { position: relative; z-index: 1; }
   .mapa-card strong { font-size: 24px; grid-row: 1; grid-column: 1; }
   .mapa-card-idx { grid-row: 1; grid-column: 2; color: var(--ouro) !important; font-size: 11px !important; letter-spacing: 0.12em; }
   .faixa { grid-template-columns: 1fr; gap: 6px; }
-  .vidracaria { grid-template-columns: 1fr; padding: 12vh 20px; gap: 50px; }
-  .vidro-espelho { width: 80%; }
+  .vidro-alvo { left: 20px; top: 76px; width: calc(100vw - 40px); height: 40svh; }
+  .vidro-texto { left: 20px; right: 20px; top: auto; bottom: 22px; transform: none; max-width: none; }
+  .vidro-texto .eyebrow { margin-bottom: 8px; }
+  .vidro-texto .titulo-sec { font-size: clamp(32px, 9.5vw, 42px); margin: 0 0 12px; }
+  .vidro-desc { font-size: 14px; line-height: 1.5; margin: 0; }
+  .vidro-tipos { margin-top: 16px; gap: 6px; }
+  .vidro-tipos button { font-size: 12px; padding: 8px 10px 8px 8px; gap: 6px; white-space: nowrap; }
+  .vidro-tipos i { width: 12px; height: 12px; }
+  .vidro-legenda { margin-top: 10px; }
+  .porta-puxador { height: 22vh; margin-top: -11vh; }
+  .porta-esq .porta-puxador { right: 16px; }
+  .porta-dir .porta-puxador { left: 16px; }
+  .porta-reflexo b { font-size: 30vw; }
   .rodape { flex-direction: column; text-align: center; padding-bottom: 96px; }
   .lb-nav { display: none; }
 }

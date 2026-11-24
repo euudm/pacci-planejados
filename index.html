@@ -215,16 +215,36 @@
 
     <!-- 8. VIDRAÇARIA -->
     <section id="vidracaria" class="vidracaria">
-      <div class="vidro-palco" id="vidro-palco">
-        <div class="vidro-espelho">
-          <img src="/obras/vidracaria-p45-02-1600.webp" alt="Closet com espelho orgânico e portas de vidro reflecta" loading="lazy" />
+      <div class="vidro-palco modo-reflecta" id="vidro-palco">
+        <span class="vidro-alvo" aria-hidden="true"></span>
+        <div class="vidro-cena" id="vidro-cena">
+          <img class="vidro-foto" src="/obras/vidracaria-p45-02-1600.webp" alt="Closet com espelho orgânico e portas de vidro reflecta" loading="lazy" decoding="async" />
+          <img class="vidro-foto vidro-foto-inv" src="/obras/vidracaria-p45-02-1600.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+          <span class="vidro-tinta"></span>
+          <span class="vidro-reflexo" aria-hidden="true"><b>PACCI</b></span>
+          <span class="vidro-prata"></span>
           <span class="vidro-brilho"></span>
+          <span class="vidro-moldura"></span>
         </div>
-      </div>
-      <div class="vidro-texto">
-        <p class="eyebrow mono">Vidraçaria</p>
-        <h2 class="titulo-sec">Mais do que vidro.<br /><em>Reflexo.</em></h2>
-        <p>Portas reflecta que trazem sofisticação e privacidade, espelhos orgânicos que valorizam o ambiente com leveza. Uma ampla variedade de vidros para unir estética e funcionalidade.</p>
+        <div class="vidro-portas" aria-hidden="true">
+          <div class="porta porta-esq"><span class="porta-reflexo"><b>PACCI</b></span><span class="porta-brilho"></span><i class="porta-puxador"></i></div>
+          <div class="porta porta-dir"><span class="porta-reflexo"><b>PACCI</b></span><span class="porta-brilho"></span><i class="porta-puxador"></i></div>
+        </div>
+        <div class="vidro-abertura">
+          <p class="eyebrow mono">Vidraçaria</p>
+          <p class="vidro-dica mono">role para abrir</p>
+        </div>
+        <div class="vidro-texto">
+          <p class="eyebrow mono">Vidraçaria</p>
+          <h2 class="titulo-sec">Mais do que vidro.<br /><em>Reflexo.</em></h2>
+          <p class="vidro-desc">Portas reflecta que trazem sofisticação e privacidade, espelhos orgânicos que valorizam o ambiente com leveza. Uma ampla variedade de vidros para unir estética e funcionalidade.</p>
+          <div class="vidro-tipos" role="radiogroup" aria-label="Tipo de vidro">
+            <button type="button" role="radio" aria-checked="true" data-modo="reflecta"><i></i>Reflecta</button>
+            <button type="button" role="radio" aria-checked="false" data-modo="incolor"><i></i>Incolor</button>
+            <button type="button" role="radio" aria-checked="false" data-modo="espelho"><i></i>Espelho orgânico</button>
+          </div>
+          <p class="vidro-legenda mono" aria-live="polite">Sofisticação e privacidade</p>
+        </div>
       </div>
     </section>
 
