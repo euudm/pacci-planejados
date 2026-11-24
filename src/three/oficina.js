@@ -458,8 +458,9 @@ export function criarOficina(canvas, { leve = false, onPronto } = {}) {
     chaveCamera(p);
     const retrato = aspecto < 1;
     if (foco > 0.001) {
-      const posConf = retrato ? v3(2.6, 2.2, 7.6) : v3(1.6, 1.5, 6.2);
-      const olhoConf = retrato ? v3(0.35, 0.15, 0) : v3(-1.05, 1.05, 0);
+      // retrato: cozinha inteira na metade de cima (o painel fica na de baixo)
+      const posConf = retrato ? v3(1.05, 1.6, 4.6) : v3(1.6, 1.5, 6.2);
+      const olhoConf = retrato ? v3(0.38, -0.05, 0) : v3(-1.05, 1.05, 0);
       const f = suave2(foco);
       camPos.lerp(posConf, f);
       camOlho.lerp(olhoConf, f);

@@ -396,20 +396,42 @@ main { position: relative; z-index: 1; }
   .hero-sub { font-size: 15.5px; margin-bottom: 26px; }
   .cotas { left: 20px; right: auto; bottom: 22px; text-align: left; font-size: 10px; gap: 4px 14px; }
   .cotas { display: none; }
-  .acabamentos { padding: 52vh 20px 12vh; align-items: flex-end; min-height: 150vh; }
+  /* acabamentos no celular: móvel na metade de cima, painel preso na metade de baixo */
+  .acabamentos { display: block; min-height: 0; padding: 58svh 20px 0; }
   .acab-texto { max-width: none; }
-  .acab-texto::before { inset: -40px -20px; background: linear-gradient(180deg, transparent, rgba(11, 20, 36, 0.92) 18%); }
-  .amostras { gap: 10px; }
-  .amostra { width: calc((100% - 40px) / 5); height: 74px; }
+  .acab-texto::after { content: ''; display: block; height: 95svh; } /* trilho do painel preso (sticky não usa o padding) */
+  .acab-texto::before { display: none; }
+  .acabamentos .eyebrow, .acabamentos .titulo-sec, .acab-desc { text-shadow: 0 2px 18px rgba(11, 20, 36, 0.9); }
+  .acab-desc { margin-bottom: 30px; }
+  .acab-painel {
+    position: sticky; top: 50svh; z-index: 2;
+    height: 50svh; margin: 0 -20px; padding: 26px 20px 16px;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    background: linear-gradient(180deg, rgba(11, 20, 36, 0) 0, rgba(11, 20, 36, 0.88) 26px, var(--navy) 60px);
+  }
+  .acab-painel::before { content: ''; position: absolute; left: 20px; right: 20px; top: 18px; height: 1px; background: var(--linha); }
+  .amostras { gap: 10px; margin: 8px 0 26px; flex-wrap: nowrap; }
+  .amostra { width: auto; flex: 1 1 0; height: clamp(54px, 9svh, 74px); }
+  .amostra span { bottom: -22px; font-size: 9.5px; }
+  .acab-ficha { padding: 10px 0 12px; margin-top: 0; border-top: 0; grid-template-columns: 1fr auto; align-items: end; }
+  .acab-ficha-rot { grid-column: 1 / -1; }
+  .acab-ficha strong { font-size: 24px; }
+  .acab-uso { font-size: 12px; text-align: right; }
+  .acab-fotos { flex: 1 1 auto; min-height: 0; }
+  .acab-fotos button { aspect-ratio: auto; height: 100%; max-height: 150px; }
   .ferragem { padding: 12vh 20px; }
   .ferr-grid { grid-template-columns: 1fr; gap: 40px; }
-  .ferr-palco { aspect-ratio: 1 / 1.05; margin-inline: -8px; }
-  .ferr-grafico { left: 12px; right: 12px; width: auto; bottom: 12px; }
-  .pilares-trilho { flex-direction: column; height: auto; }
-  .pilar, .pilar-intro { flex-basis: auto; padding: 56px 20px; border-left: 0; border-top: 1px solid rgba(29, 26, 21, 0.12); }
-  .pilar-intro { border-top: 0; padding-top: 12vh; }
-  .pilar h3 { margin-top: 26px; }
-  .pilar-ico { max-width: 320px; }
+  .ferr-palco { aspect-ratio: 1 / 1.4; margin-inline: -8px; }
+  #ferr-canvas { touch-action: pan-y; }
+  .ferr-grafico { left: 12px; right: 12px; width: auto; top: 12px; bottom: auto; padding: 10px 14px 8px; }
+  .ferr-grafico svg { height: 40px; }
+  .ferr-dica { top: auto; bottom: 10px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+  /* pilares: mesma rolagem horizontal do desktop, cartões na largura da tela */
+  .pilar { flex: 0 0 84vw; padding: 13svh 24px 9svh; }
+  .pilar-intro { flex: 0 0 100vw; padding: 13svh 20px 9svh; }
+  .pilar-intro .titulo-sec { font-size: clamp(40px, 12vw, 60px); }
+  .pilar h3 { margin-top: auto; }
+  .pilar-ico { max-width: 300px; margin-top: 20px; }
   .ambientes { padding: 12vh 14px 10vh; }
   .amb-cabeca { padding-inline: 6px; }
   .gav-frente { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px 14px; padding: 26px 18px 22px; }

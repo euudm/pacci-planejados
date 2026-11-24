@@ -9,6 +9,8 @@ import { montarGravacao } from './modules/gravacao.js';
 import { abrirLightbox } from './modules/lightbox.js';
 
 gsap.registerPlugin(ScrollTrigger);
+// no celular a barra de endereço muda a altura da tela ao rolar: não recalcular por isso
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 const WHATS = '5511997550461';
 const MSG = 'Olá! Vim pelo site da Pacci Planejados e quero fazer um orçamento.';
@@ -233,7 +235,7 @@ $$('.pilar-ico svg').forEach((svg) => {
 });
 
 const mm = gsap.matchMedia();
-mm.add('(min-width: 901px)', () => {
+mm.add('all', () => {
   const trilho = $('.pilares-trilho');
   const dist = () => trilho.scrollWidth - window.innerWidth;
   gsap.to(trilho, {
@@ -266,7 +268,20 @@ if (!toque) {
     espelho.style.setProperty('--by', `${(y + 0.5) * 100}%`);
   });
   palco.addEventListener('pointerleave', () => ['--ry', '--rx', '--tx', '--ty'].forEach((v) => espelho.style.setProperty(v, 0)));
+} else {
+  // celular: o espelho gira e o reflexo corre conforme a rolagem
+  ScrollTrigger.create({
+    trigger: '#vidracaria', start: 'top bottom', end: 'bottom top',
+    onUpdate: (s) => {
+      const x = s.progress - 0.5;
+      espelho.style.setProperty('--ry', `${x * 26}deg`);
+      espelho.style.setProperty('--tx', `${-x * 6}%`);
+      espelho.style.setProperty('--bx', `${(1 - s.progress) * 100}%`);
+      espelho.style.setProperty('--by', `${20 + s.progress * 50}%`);
+    },
+  });
 }
+if (toque) $('.ferr-dica').lastChild.textContent = 'deslize a gaveta para o lado';
 gsap.fromTo(espelho, { clipPath: 'inset(50% 0 50% 0)' }, { clipPath: 'inset(0% 0 0% 0)', duration: 1.6, ease: 'expo.inOut', scrollTrigger: { trigger: '#vidracaria', start: 'top 65%' } });
 
 // ---------- contato: gravação ----------

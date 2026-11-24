@@ -113,7 +113,7 @@ export function criarFerragem(canvas, ui, { leve = false } = {}) {
     camera.aspect = w / h;
     const retrato = w / h < 1;
     camera.position.set(retrato ? 1.4 : 1.25, retrato ? 1.55 : 1.4, retrato ? 2.5 : 1.95);
-    camera.lookAt(0, 0.45, 0.14);
+    camera.lookAt(0, retrato ? 0.66 : 0.45, 0.14);
     camera.updateProjectionMatrix();
   }
 
@@ -138,7 +138,10 @@ export function criarFerragem(canvas, ui, { leve = false } = {}) {
     if (!arrastando) return;
     const d = dirTela();
     const mx = e.clientX - ultimoPonto.x, my = e.clientY - ultimoPonto.y;
-    const passo = ((mx * d.dx + my * d.dy) / (d.len * d.len)) * 0.1;
+    // no toque só o movimento lateral abre (o vertical fica pra rolar a página)
+    const passo = e.pointerType === 'touch'
+      ? (mx * Math.sign(d.dx || 1) / Math.max(1, canvas.clientWidth)) * MAX * 1.8
+      : ((mx * d.dx + my * d.dy) / (d.len * d.len)) * 0.1;
     const agora = performance.now();
     const nx = clamp(x + passo, 0, MAX);
     v = (nx - x) / Math.max(0.008, (agora - ultimoT) / 1000);
