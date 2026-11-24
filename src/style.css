@@ -317,41 +317,43 @@ main { position: relative; z-index: 1; }
 @keyframes faixa { to { transform: translateX(-50%); } }
 
 /* ---------------- 8. VIDRAÇARIA ---------------- */
-/* Seção presa: portas reflecta abrem, o closet aparece e encolhe até virar uma peça de vidro configurável. */
+/* Seção presa: portas reflecta abrem e revelam a peça de vidro configurável.
+   A peça tem tamanho fixo perto da resolução da foto (736px) e só anima transform/opacity. */
 .vidracaria { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: radial-gradient(80% 70% at 30% 40%, #1b2a44, var(--navy) 70%); }
-.vidro-palco { position: absolute; inset: 0; --k: 0; }
-.vidro-alvo { position: absolute; left: var(--lateral); top: 13vh; width: 46vw; height: 76vh; pointer-events: none; visibility: hidden; }
-
-.vidro-cena {
-  position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1;
-  /* --k vai de 0 (tela cheia) a 1 (peça pronta): o arredondamento cresce junto */
-  border-radius: calc(var(--k) * 3.2%) / calc(var(--k) * 2.6%);
-  box-shadow: 0 50px 90px -40px rgba(0, 0, 0, calc(var(--k) * 0.9));
-  will-change: left, top, width, height;
+.vidro-palco {
+  position: absolute; inset: 0;
+  --pw: min(44vw, 600px); --ph: min(74vh, 620px);
+  --gl: max(var(--lateral), calc((100vw - var(--pw) - 6vw - 520px) / 2));
 }
-.vidro-palco.pronto .vidro-cena { transition: border-radius 1s var(--ease), box-shadow 1s var(--ease); }
-.vidro-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(var(--zoom, 1.16)); transition: opacity 0.9s var(--ease); }
-.vidro-foto-inv { transform: scale(var(--zoom, 1.16)) scaleX(-1); opacity: 0; }
+.vidro-cena {
+  position: absolute; z-index: 1; overflow: hidden;
+  left: var(--gl); top: calc(50% - var(--ph) / 2); width: var(--pw); height: var(--ph);
+  border-radius: 3.2% / 2.6%;
+  box-shadow: 0 50px 90px -40px rgba(0, 0, 0, 0.9);
+  transition: border-radius 1s var(--ease), box-shadow 1s var(--ease);
+  will-change: transform;
+}
+.vidro-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.9s var(--ease); }
+.vidro-foto-inv { transform: scaleX(-1); opacity: 0; }
 .vidro-tinta, .vidro-reflexo, .vidro-prata, .vidro-brilho, .vidro-moldura { position: absolute; inset: 0; pointer-events: none; transition: opacity 0.9s var(--ease); }
-.vidro-tinta { background: linear-gradient(160deg, rgba(120, 82, 44, 0.55), rgba(38, 24, 12, 0.78)); mix-blend-mode: multiply; opacity: 0; }
-.vidro-reflexo { display: flex; align-items: center; justify-content: center; opacity: 0; mix-blend-mode: screen; }
+.vidro-tinta { background: linear-gradient(160deg, rgba(92, 60, 30, 0.42), rgba(30, 20, 10, 0.62)); opacity: 0; }
+.vidro-reflexo { display: flex; align-items: center; justify-content: center; opacity: 0; }
 .vidro-reflexo b, .porta-reflexo b {
-  font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; transform: scaleX(-1) translateX(var(--rx, 0));
+  font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; transform: scaleX(-1);
   background: linear-gradient(180deg, rgba(255, 230, 196, 0.32), rgba(255, 230, 196, 0.02) 75%); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.vidro-cena { container-type: size; }
-.vidro-reflexo b { font-size: 30cqw; }
-.vidro-prata { background: radial-gradient(70% 60% at 50% 40%, rgba(255, 255, 255, 0.16), rgba(200, 214, 230, 0.32)); mix-blend-mode: soft-light; opacity: 0; }
-.vidro-brilho { background: radial-gradient(38% 30% at var(--bx, 30%) var(--by, 25%), rgba(255, 255, 255, 0.38), transparent 70%), linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.14) 42%, transparent 52%); mix-blend-mode: soft-light; opacity: var(--k); }
-.vidro-moldura { border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255, 220, 170, 0.55), inset 0 0 0 7px rgba(201, 164, 106, 0.22); opacity: var(--k); }
+.vidro-reflexo b { font-size: min(13vw, 180px); }
+.vidro-prata { background: radial-gradient(70% 60% at 50% 40%, rgba(255, 255, 255, 0.06), rgba(210, 222, 236, 0.16)); opacity: 0; }
+.vidro-brilho { background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.12) 42%, transparent 52%); }
+.vidro-moldura { border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255, 220, 170, 0.55), inset 0 0 0 7px rgba(201, 164, 106, 0.22); }
 
 /* modos do vidro */
 .modo-reflecta .vidro-tinta { opacity: 1; }
-.modo-reflecta .vidro-reflexo { opacity: 0.55; }
-.modo-incolor .vidro-brilho { filter: brightness(1.25); }
+.modo-reflecta .vidro-reflexo { opacity: 0.6; }
+.modo-incolor .vidro-brilho { opacity: 0.6; }
 .modo-espelho .vidro-cena {
-  border-radius: calc(var(--k) * 48%) calc(var(--k) * 52%) calc(var(--k) * 46%) calc(var(--k) * 54%) / calc(var(--k) * 40%) calc(var(--k) * 38%) calc(var(--k) * 62%) calc(var(--k) * 60%);
-  box-shadow: 0 0 0 2px rgba(255, 240, 214, calc(var(--k) * 0.9)), 0 0 34px 4px rgba(255, 222, 170, calc(var(--k) * 0.5)), 0 0 120px 10px rgba(255, 200, 140, calc(var(--k) * 0.22));
+  border-radius: 48% 52% 46% 54% / 40% 38% 62% 60%;
+  box-shadow: 0 0 0 2px rgba(255, 240, 214, 0.9), 0 0 34px 4px rgba(255, 222, 170, 0.5), 0 0 120px 10px rgba(255, 200, 140, 0.22);
 }
 .modo-espelho .vidro-foto-inv { opacity: 1; }
 .modo-espelho .vidro-prata { opacity: 1; }
@@ -371,7 +373,7 @@ main { position: relative; z-index: 1; }
 .porta-esq .porta-reflexo { left: 0; }
 .porta-dir .porta-reflexo { right: 0; }
 .porta-reflexo b { font-size: 21vw; }
-.porta-brilho { position: absolute; inset: -20% -60%; background: linear-gradient(105deg, transparent 40%, rgba(255, 236, 205, 0.13) 47%, rgba(255, 236, 205, 0.04) 52%, transparent 58%); transform: translateX(var(--brilho, -30%)); }
+.porta-brilho { position: absolute; inset: -20% -60%; background: linear-gradient(105deg, transparent 40%, rgba(255, 236, 205, 0.13) 47%, rgba(255, 236, 205, 0.04) 52%, transparent 58%); will-change: transform; }
 .porta-puxador { position: absolute; top: 50%; width: 4px; height: 34vh; margin-top: -17vh; border-radius: 2px; background: linear-gradient(90deg, #8a6a3a, var(--ouro-luz), #a47c3f); box-shadow: 0 0 16px rgba(255, 207, 143, 0.25); }
 .porta-esq .porta-puxador { right: 30px; }
 .porta-dir .porta-puxador { left: 30px; }
@@ -380,7 +382,7 @@ main { position: relative; z-index: 1; }
 .vidro-abertura .eyebrow { margin: 0; }
 .vidro-dica { margin: 0; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cinza); }
 
-.vidro-texto { position: absolute; z-index: 3; left: calc(var(--lateral) + 46vw + 6vw); right: var(--lateral); top: 50%; transform: translateY(-50%); max-width: 520px; }
+.vidro-texto { position: absolute; z-index: 3; left: calc(var(--gl) + var(--pw) + 6vw); right: var(--lateral); top: 50%; transform: translateY(-50%); max-width: 520px; }
 .vidro-texto .titulo-sec { margin-bottom: 22px; }
 .vidro-desc { color: #c3cad6; max-width: 440px; }
 .vidro-tipos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
@@ -536,7 +538,9 @@ main { position: relative; z-index: 1; }
   .mapa-card strong { font-size: 24px; grid-row: 1; grid-column: 1; }
   .mapa-card-idx { grid-row: 1; grid-column: 2; color: var(--ouro) !important; font-size: 11px !important; letter-spacing: 0.12em; }
   .faixa { grid-template-columns: 1fr; gap: 6px; }
-  .vidro-alvo { left: 20px; top: 76px; width: calc(100vw - 40px); height: 40svh; }
+  /* altura da peça = espaço livre acima do texto (calculado no JS em --ph-cel) */
+  .vidro-cena { left: 20px; top: 76px; width: calc(100vw - 40px); height: var(--ph-cel, 40svh); }
+  .vidro-reflexo b { font-size: 26vw; }
   .vidro-texto { left: 20px; right: 20px; top: auto; bottom: 22px; transform: none; max-width: none; }
   .vidro-texto .eyebrow { margin-bottom: 8px; }
   .vidro-texto .titulo-sec { font-size: clamp(32px, 9.5vw, 42px); margin: 0 0 12px; }

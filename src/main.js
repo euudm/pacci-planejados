@@ -271,13 +271,19 @@ mm.add('(max-width: 900px)', () => {
   voo.atualizar(0);
 });
 
-// ---------- vidraçaria: portas reflecta abrem e o closet vira a peça de vidro ----------
+// ---------- vidraçaria: portas reflecta abrem e revelam a peça de vidro ----------
+// Só anima transform e opacity (nada de layout por quadro) e a foto nunca passa da resolução real.
 const palco = $('#vidro-palco');
 const vcena = $('#vidro-cena');
-const alvo = $('.vidro-alvo');
 const vtexto = $('.vidro-texto');
-// no celular a peça ocupa todo o espaço livre acima do texto
-const altAlvo = () => (window.innerWidth <= 900 ? Math.max(200, vtexto.offsetTop - alvo.offsetTop - 28) : alvo.offsetHeight);
+// no celular a peça ocupa o espaço livre acima do texto (medido uma vez, não por quadro)
+const ajustarPeca = () => {
+  if (window.innerWidth <= 900) palco.style.setProperty('--ph-cel', `${Math.max(200, vtexto.offsetTop - vcena.offsetTop - 28)}px`);
+  else palco.style.removeProperty('--ph-cel');
+};
+ajustarPeca();
+ScrollTrigger.addEventListener('refreshInit', ajustarPeca);
+
 const LEGENDAS = { reflecta: 'Sofisticação e privacidade', incolor: 'Transparência e leveza', espelho: 'Valoriza o ambiente com leveza' };
 const botoesVidro = $$('.vidro-tipos button');
 botoesVidro.forEach((b) => b.addEventListener('click', () => {
@@ -292,35 +298,22 @@ vtl
   // 1. as duas portas de correr abrem, o reflexo corre pelo vidro
   .to('.porta-esq', { xPercent: -101, duration: 4, ease: 'power2.inOut' }, 0)
   .to('.porta-dir', { xPercent: 101, duration: 4, ease: 'power2.inOut' }, 0)
-  .fromTo('.porta', { '--brilho': '-30%' }, { '--brilho': '45%', duration: 4 }, 0)
+  .fromTo('.porta-brilho', { xPercent: -25 }, { xPercent: 30, duration: 4 }, 0)
   .to('.vidro-abertura', { opacity: 0, y: -24, duration: 1.2 }, 0)
-  .fromTo(vcena, { '--zoom': 1.16 }, { '--zoom': 1.03, duration: 8 }, 0)
-  // 2. o closet encolhe até virar a peça de vidro
-  .fromTo(vcena,
-    { left: 0, top: 0, width: () => palco.offsetWidth, height: () => palco.offsetHeight },
-    { left: () => alvo.offsetLeft, top: () => alvo.offsetTop, width: () => alvo.offsetWidth, height: altAlvo, duration: 3.6, ease: 'power3.inOut' }, 4.4)
-  .fromTo(palco, { '--k': 0 }, { '--k': 1, duration: 3.6, ease: 'power3.inOut' }, 4.4)
+  // 2. a peça de vidro vem para a frente atrás das portas
+  .fromTo(vcena, { scale: 0.88, opacity: 0.35 }, { scale: 1, opacity: 1, duration: 3.8, ease: 'power2.out' }, 0.6)
   // 3. texto e seletor de vidro entram
-  .fromTo('.vidro-texto > *', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 2, stagger: 0.35, ease: 'power3.out' }, 6.8)
-  .to({}, { duration: 1.6 });
-if (toque) vtl.fromTo(vcena, { '--bx': '10%', '--by': '20%' }, { '--bx': '90%', '--by': '60%', duration: vtl.duration() }, 0);
-else {
-  palco.addEventListener('pointermove', (e) => {
-    const r = vcena.getBoundingClientRect();
-    vcena.style.setProperty('--bx', `${((e.clientX - r.left) / r.width) * 100}%`);
-    vcena.style.setProperty('--by', `${((e.clientY - r.top) / r.height) * 100}%`);
-  });
-}
+  .fromTo('.vidro-texto > *', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 2, stagger: 0.3, ease: 'power3.out' }, 3)
+  .to({}, { duration: 1.4 });
 
 if (reduzido) {
   vtl.progress(1);
   palco.classList.add('pronto');
-  window.addEventListener('resize', () => vtl.invalidate().progress(1));
 } else {
   ScrollTrigger.create({
-    trigger: '#vidracaria', start: 'top top', end: '+=260%',
+    trigger: '#vidracaria', start: 'top top', end: '+=200%',
     pin: true, scrub: toque ? true : 0.6, animation: vtl, invalidateOnRefresh: true,
-    onUpdate: (s) => palco.classList.toggle('pronto', s.progress > 0.74),
+    onUpdate: (s) => palco.classList.toggle('pronto', s.progress > 0.6),
     onToggle: (s) => $('.whats-flutuante').classList.toggle('escondido', s.isActive),
   });
 }
