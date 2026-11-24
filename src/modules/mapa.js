@@ -91,6 +91,15 @@ export function montarMapa() {
   const rota = el('path', { d, class: 'mapa-rota' });
   svg.appendChild(rota);
 
+  let modoVoo = false, voo = null;
+  function preencher(b) {
+    const o = b.fotos[0];
+    cardImg.src = `/obras/${o.id}-800.webp`;
+    cardImg.alt = `Obra em ${b.nome}`;
+    cardRot.textContent = `${b.cats.join(' · ')}  ·  ${b.fotos.length} fotos`;
+    cardNome.textContent = b.nome;
+  }
+
   const pontos = el('g', { class: 'mapa-pontos' });
   svg.appendChild(pontos);
   const nodos = bairros.map((b) => {
@@ -102,11 +111,8 @@ export function montarMapa() {
     g.appendChild(t);
     pontos.appendChild(g);
     const mostrar = () => {
-      const o = b.fotos[0];
-      cardImg.src = `/obras/${o.id}-800.webp`;
-      cardImg.alt = `Obra em ${b.nome}`;
-      cardRot.textContent = `${b.cats.join(' · ')}  ·  ${b.fotos.length} fotos`;
-      cardNome.textContent = b.nome;
+      if (modoVoo) { voo?.irPara(bairros.indexOf(b)); return; }
+      preencher(b);
       const box = svg.getBoundingClientRect();
       const px = (b.x / 1000) * box.width, py = (b.y / 520) * box.height;
       card.style.setProperty('--x', `${px}px`);
@@ -121,6 +127,7 @@ export function montarMapa() {
     return g;
   });
   svg.addEventListener('pointerleave', () => {
+    if (modoVoo) return;
     card.classList.remove('on');
     nodos.forEach((n) => n.classList.remove('ativo'));
   });
@@ -142,6 +149,65 @@ export function montarMapa() {
       tl.to(nodos, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(3)', stagger: 2.4 / nodos.length }, 0.1);
       const obj = { n: 0 };
       tl.to(obj, { n: bairros.length, duration: 2.4, ease: 'none', onUpdate: () => { contador.textContent = Math.round(obj.n); } }, 0.1);
+    },
+
+    // Celular: voo pelo mapa, de bairro em bairro, guiado pela rolagem.
+    // irPara(i) recebe uma função que rola a página até a parada i.
+    iniciarVoo(rolarPara) {
+      modoVoo = true;
+      feito = true;
+      const n = bairros.length;
+      const palco = svg.parentElement;
+      const indice = document.createElement('span');
+      indice.className = 'mapa-card-idx mono';
+      card.querySelector('figcaption').prepend(indice);
+      card.classList.add('on');
+      gsap.set(nodos, { scale: 1 });
+
+      // comprimento da rota até cada parada
+      const comps = bairros.map((_, i) => {
+        if (i === 0) return 0;
+        const tmp = el('path', { d: d.split(' Q ').slice(0, i + 1).join(' Q ') });
+        svg.appendChild(tmp);
+        const L = tmp.getTotalLength();
+        tmp.remove();
+        return L;
+      });
+
+      let atual = -1;
+      const suave = (t) => t * t * (3 - 2 * t);
+      function trocarCard(i) {
+        if (i === atual) return;
+        atual = i;
+        indice.textContent = `${String(i + 1).padStart(2, '0')} / ${n}`;
+        gsap.to(cardImg, { opacity: 0, duration: 0.15, onComplete: () => {
+          preencher(bairros[i]);
+          gsap.to(cardImg, { opacity: 1, duration: 0.35 });
+        } });
+        nodos.forEach((g, k) => g.classList.toggle('ativo', k === i));
+      }
+      voo = { irPara: (i) => rolarPara(i / (n - 1)) };
+
+      return {
+        atualizar(prog) {
+          const f = Math.min(n - 1, Math.max(0, prog * (n - 1)));
+          const a = Math.min(n - 2, Math.floor(f)), t = suave(f - a);
+          const A = bairros[a], B = bairros[a + 1];
+          const px = A.x + (B.x - A.x) * t, py = A.y + (B.y - A.y) * t;
+          // recua no meio do trajeto e aproxima ao chegar
+          const k = svg.clientWidth / 1000;
+          const z = 1 - 0.22 * Math.sin(t * Math.PI);
+          const cx = palco.clientWidth / 2, cy = palco.clientHeight * 0.4;
+          svg.style.transform = `translate3d(${cx - px * k * z}px, ${cy - py * k * z}px, 0) scale(${z})`;
+          rota.style.strokeDashoffset = comp - (comps[a] + (comps[a + 1] - comps[a]) * t);
+          const ativo = Math.round(f);
+          nodos.forEach((g, i) => {
+            const vis = i === ativo ? 1 : Math.min(1, Math.max(0, (f - i + 1) / 0.7));
+            g.style.opacity = 0.22 + vis * 0.78;
+          });
+          trocarCard(ativo);
+        },
+      };
     },
   };
 }

@@ -1,5 +1,9 @@
 // Ambientes como gavetas: cada categoria é uma frente de MDF que abre e mostra as obras.
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// altura da página mudou: recalcula as seções presas (no celular o resize é ignorado)
+const recalcular = () => ScrollTrigger.refresh();
 import obras from '../data/obras.json';
 import { texturaComoURL } from '../three/texturas.js';
 import { abrirLightbox } from './lightbox.js';
@@ -66,13 +70,13 @@ export function montarGavetas(raiz) {
       g.classList.toggle('aberta', sim);
       if (sim) {
         abertas.add(g);
-        gsap.fromTo(corpo, { height: 0 }, { height: 'auto', duration: 0.9, ease: 'expo.out', onComplete: () => window.dispatchEvent(new Event('resize')) });
+        gsap.fromTo(corpo, { height: 0 }, { height: 'auto', duration: 0.9, ease: 'expo.out', onComplete: recalcular });
         gsap.fromTo(bandeja.children, { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.035 });
         gsap.fromTo(frente, { y: 0 }, { y: -6, duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.out' });
       } else {
         abertas.delete(g);
         // fechamento suave: rápido no começo, devagar no fim
-        gsap.to(corpo, { height: 0, duration: 0.75, ease: 'expo.out', onComplete: () => window.dispatchEvent(new Event('resize')) });
+        gsap.to(corpo, { height: 0, duration: 0.75, ease: 'expo.out', onComplete: recalcular });
       }
     }
     frente.addEventListener('click', () => {

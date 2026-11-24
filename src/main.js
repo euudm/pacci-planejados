@@ -251,7 +251,25 @@ gsap.from('.gaveta', { y: 60, opacity: 0, duration: 1, ease: 'power3.out', stagg
 
 // ---------- mapa ----------
 const mapa = montarMapa();
-ScrollTrigger.create({ trigger: '#mapa', start: 'top 70%', once: true, onEnter: () => mapa.animar() });
+mm.add('(min-width: 901px)', () => {
+  ScrollTrigger.create({ trigger: '#mapa', start: 'top 70%', once: true, onEnter: () => mapa.animar() });
+});
+mm.add('(max-width: 900px)', () => {
+  // celular: seção presa em tela cheia, a câmera voa de bairro em bairro
+  let st = null;
+  const voo = mapa.iniciarVoo((prog) => {
+    if (!st) return;
+    window.scrollTo({ top: st.start + (st.end - st.start) * prog, behavior: 'smooth' });
+  });
+  st = ScrollTrigger.create({
+    trigger: '#obras', start: 'top top', end: () => `+=${mapa.total * 34}%`,
+    pin: true, scrub: true, invalidateOnRefresh: true,
+    onUpdate: (s) => voo.atualizar(s.progress),
+    onRefresh: (s) => voo.atualizar(s.progress),
+    onToggle: (s) => $('.whats-flutuante').classList.toggle('escondido', s.isActive),
+  });
+  voo.atualizar(0);
+});
 
 // ---------- vidraçaria ----------
 const palco = $('#vidro-palco');
@@ -281,7 +299,7 @@ if (!toque) {
     },
   });
 }
-if (toque) $('.ferr-dica').lastChild.textContent = 'deslize a gaveta para o lado';
+if (toque && $('.ferr-dica')) $('.ferr-dica').lastChild.textContent = 'deslize a gaveta para o lado';
 gsap.fromTo(espelho, { clipPath: 'inset(50% 0 50% 0)' }, { clipPath: 'inset(0% 0 0% 0)', duration: 1.6, ease: 'expo.inOut', scrollTrigger: { trigger: '#vidracaria', start: 'top 65%' } });
 
 // ---------- contato: gravação ----------
