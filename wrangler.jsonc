@@ -1,0 +1,6 @@
+// Publicação no Cloudflare (Workers com assets estáticos): npm run build && wrangler deploy
+{
+  "name": "pacci-planejados",
+  "compatibility_date": "2026-11-01",
+  "assets": { "directory": "./dist" }
+}
