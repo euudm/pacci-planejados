@@ -43,7 +43,7 @@ export function montarGavetas(raiz) {
         <div class="gav-bandeja">
           ${fotos.map((o, k) => `
             <figure class="gav-foto" style="--r:${o.r}" data-k="${k}">
-              <img src="/obras/${o.id}-800.webp" alt="${itensLb[k].alt}" loading="lazy" decoding="async" width="${Math.round(800)}" height="${Math.round(800 / o.r)}" />
+              <img data-src="/obras/${o.id}-800.webp" alt="${itensLb[k].alt}" loading="lazy" decoding="async" width="${Math.round(800)}" height="${Math.round(800 / o.r)}" />
               ${legendaDe(o) ? `<figcaption class="mono">${legendaDe(o)}</figcaption>` : ''}
             </figure>`).join('')}
         </div>
@@ -69,6 +69,8 @@ export function montarGavetas(raiz) {
       frente.setAttribute('aria-expanded', String(sim));
       g.classList.toggle('aberta', sim);
       if (sim) {
+        // fotos só baixam quando a gaveta abre
+        bandeja.querySelectorAll('img[data-src]').forEach((img) => { img.src = img.dataset.src; img.removeAttribute('data-src'); });
         abertas.add(g);
         gsap.fromTo(corpo, { height: 0 }, { height: 'auto', duration: 0.9, ease: 'expo.out', onComplete: recalcular });
         gsap.fromTo(bandeja.children, { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.035 });

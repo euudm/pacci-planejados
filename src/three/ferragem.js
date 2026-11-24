@@ -1,8 +1,7 @@
 // Gaveta com fechamento suave: arraste pra abrir, solte e ela recolhe sozinha,
 // desacelerando nos últimos centímetros (amortecedor).
 import * as THREE from 'three';
-import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { materialSelecao, materialPedra, materialMetal, uvMundo } from './materiais.js';
+import { materialSelecao, materialPedra, uvMundo } from './materiais.js';
 
 const T = 0.018;
 const MAX = 0.42;      // abertura máxima (m)
@@ -17,14 +16,18 @@ export function criarFerragem(canvas, ui, { leve = false } = {}) {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
 
+  // sem mapa de ambiente (PMREM travava a página ~5 s ao criar a cena);
+  // o visual claro vem de luzes simples
   const cena = new THREE.Scene();
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  cena.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  cena.environmentIntensity = 0.45;
-
   const camera = new THREE.PerspectiveCamera(30, 1, 0.05, 20);
 
-  cena.add(new THREE.HemisphereLight(0xfff4e4, 0x5a4a38, 0.8));
+  cena.add(new THREE.HemisphereLight(0xfff4e4, 0x6a5a48, 1.35));
+  const preenche = new THREE.DirectionalLight(0xfff6ea, 0.9);
+  preenche.position.set(2.5, 1.6, 2.4);
+  cena.add(preenche);
+  const contra = new THREE.DirectionalLight(0xffffff, 0.5);
+  contra.position.set(0.5, 2.5, -2);
+  cena.add(contra);
   const sol = new THREE.DirectionalLight(0xfff0dc, 2.2);
   sol.position.set(-1.6, 3, 2.2);
   sol.castShadow = true;
@@ -41,8 +44,9 @@ export function criarFerragem(canvas, ui, { leve = false } = {}) {
 
   let matFrente = materialSelecao('freijo', renderer, leve);
   const matInterno = new THREE.MeshStandardMaterial({ color: 0xece6dc, roughness: 0.8 });
-  const matMetal = materialMetal();
-  const matTrilho = new THREE.MeshStandardMaterial({ color: 0xb9bcc2, metalness: 1, roughness: 0.28 });
+  // sem ambiente, metal 100% fica preto: metal "fosco" que pega as luzes
+  const matMetal = new THREE.MeshStandardMaterial({ color: 0xc9a46a, metalness: 0.55, roughness: 0.35 });
+  const matTrilho = new THREE.MeshStandardMaterial({ color: 0xb9bcc2, metalness: 0.45, roughness: 0.3 });
   const frentes = [];
 
   function caixa(dims, pos, mat, pai = cena, uv = false) {
@@ -190,7 +194,7 @@ export function criarFerragem(canvas, ui, { leve = false } = {}) {
   let ativo = false, raf = 0, ultimo = performance.now();
   function quadro(agora) {
     raf = requestAnimationFrame(quadro);
-    if (!ativo) { ultimo = agora; return; }
+    if (!ativo || !compilado) { ultimo = agora; return; }
     const dt = Math.min(0.04, (agora - ultimo) / 1000);
     ultimo = agora;
     passoFisica(dt);
@@ -216,6 +220,9 @@ export function criarFerragem(canvas, ui, { leve = false } = {}) {
 
   redimensionar();
   new ResizeObserver(redimensionar).observe(canvas);
+  // compila os shaders sem travar a página (paralelo quando a placa suporta)
+  let compilado = false;
+  renderer.compileAsync(cena, camera).catch(() => {}).finally(() => { compilado = true; });
   raf = requestAnimationFrame(quadro);
 
   return {

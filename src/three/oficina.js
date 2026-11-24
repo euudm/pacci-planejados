@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { materialSelecao, materialPedra, materialMetal, materialRodape, uvMundo, SELECOES } from './materiais.js';
+import { materialSelecao, materialSelecaoAsync, materialPedra, materialMetal, materialRodape, uvMundo, SELECOES } from './materiais.js';
 
 const T = 0.018; // espessura do MDF (m)
 const CHAPA = { x: 2.75, z: 1.85 };
@@ -522,10 +522,29 @@ export function criarOficina(canvas, { leve = false, onPronto } = {}) {
   raf = requestAnimationFrame(quadro);
   onPronto?.();
 
-  // pré-gera as outras seleções no tempo ocioso
-  const ocioso = window.requestIdleCallback || ((fn) => setTimeout(fn, 400));
-  SELECOES.filter((s) => s.id !== selecaoAtual).forEach((s, i) =>
-    ocioso(() => materialSelecao(s.id, renderer, leve), { timeout: 4000 + i * 800 }));
+  // Prepara as outras seleções aos poucos, sem travar: pixels no Web Worker,
+  // envio da textura pra GPU e compilação do shader com as luzes desta cena.
+  // Assim a primeira troca de cada cor é instantânea.
+  const ocioso = (fn) => (window.requestIdleCallback ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 200));
+  const espera = (ms) => new Promise((ok) => setTimeout(ok, ms));
+  const preparadas = new Set([selecaoAtual]);
+  (async () => {
+    await espera(1500);
+    for (const s of SELECOES) {
+      if (preparadas.has(s.id)) continue;
+      const mat = await materialSelecaoAsync(s.id, renderer, leve);
+      await new Promise((ok) => ocioso(ok));
+      renderer.initTexture(mat.map);
+      if (mat.roughnessMap) renderer.initTexture(mat.roughnessMap);
+      const tmp = new THREE.Scene();
+      const m = new THREE.Mesh(pecas[0].mesh.geometry, mat);
+      m.castShadow = m.receiveShadow = true;
+      tmp.add(m);
+      await new Promise((ok) => ocioso(ok));
+      await renderer.compileAsync(tmp, camera, cena).catch(() => {});
+      preparadas.add(s.id);
+    }
+  })();
 
   return {
     set progresso(v) { alvoP = clamp01(v); },

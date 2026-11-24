@@ -49,6 +49,45 @@ function canvasCinza(arr, W, H) {
   return cv;
 }
 
+// só os pixels (sem DOM): roda tanto na página quanto no Web Worker
+export function pixelsSelecao(id, W, H) {
+  const sel = SELECOES.find((s) => s.id === id);
+  if (sel.tipo !== 'madeira') {
+    W = 128; H = 128;
+    const cor = new Uint8ClampedArray(W * H * 4);
+    const n = criaRuido(sel.id.length * 13);
+    const [r, g, b] = sel.base;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const v = (n(x * 0.05, y * 0.05) - 0.5) * 7 + (Math.random() - 0.5) * 4;
+      const i = (y * W + x) * 4;
+      cor[i] = r + v; cor[i + 1] = g + v; cor[i + 2] = b + v; cor[i + 3] = 255;
+    }
+    return { W, H, cor, rough: null };
+  }
+  const cor = new Uint8ClampedArray(W * H * 4);
+  const rough = new Uint8ClampedArray(W * H * 4);
+  const n = criaRuido(sel.id.length * 7);
+  const esc = 512 / W;
+  const [cr, cg, cb] = sel.claro, [er, eg, eb] = sel.escuro;
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const X = x * esc, Y = y * esc;
+      const warp = n(X * 0.008, Y * 0.0016) * 26 + n(X * 0.05, Y * 0.008) * 3;
+      const freq = 0.11 + n(X * 0.003, 0.5) * 0.12;
+      const anel = Math.sin((X + warp) * freq + n(X * 0.006, Y * 0.0012) * 6);
+      let t = Math.pow(Math.abs(anel), 8) * 0.3;
+      const fibra = n(X * 1.4, Y * 0.012) * 0.6 + n(X * 3.1, Y * 0.03) * 0.4;
+      const mancha = n(X * 0.006, Y * 0.0012);
+      t = Math.min(1, t + fibra * 0.3 + mancha * 0.42);
+      const i = (y * W + x) * 4;
+      cor[i] = cr + (er - cr) * t; cor[i + 1] = cg + (eg - cg) * t; cor[i + 2] = cb + (eb - cb) * t; cor[i + 3] = 255;
+      const rv = 150 + t * 80;
+      rough[i] = rv; rough[i + 1] = rv; rough[i + 2] = rv; rough[i + 3] = 255;
+    }
+  }
+  return { W, H, cor, rough };
+}
+
 export function texturaMadeira(sel, W, H) {
   const cv = document.createElement('canvas');
   cv.width = W; cv.height = H;
