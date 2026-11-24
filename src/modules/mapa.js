@@ -110,8 +110,10 @@ export function montarMapa() {
     t.textContent = b.nome;
     g.appendChild(t);
     pontos.appendChild(g);
-    const mostrar = () => {
-      if (modoVoo) { voo?.irPara(bairros.indexOf(b)); return; }
+    const mostrar = (e) => {
+      // celular: só um toque de verdade (click) leva ao bairro. pointerenter/focus disparam
+      // quando o dedo apenas encosta para rolar e faziam a página pular para o fim do mapa.
+      if (modoVoo) { if (e?.type === 'click') voo?.irPara(bairros.indexOf(b)); return; }
       preencher(b);
       const box = svg.getBoundingClientRect();
       const px = (b.x / 1000) * box.width, py = (b.y / 520) * box.height;

@@ -20,8 +20,7 @@ const clamp01 = (v) => Math.min(1, Math.max(0, v));
 const faixa = (p, a, b) => clamp01((p - a) / (b - a));
 
 const mmMobile = window.matchMedia('(max-width: 900px)');
-const toque = window.matchMedia('(pointer: coarse)').matches;
-const reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const toque = window.matchMedia('(pointer: coarse)').matches;const reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const leve = mmMobile.matches || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
 
 // ---------- WhatsApp ----------
